@@ -1,5 +1,5 @@
+import HeaderControls from "@/modules/header/header-controls/HeaderControls";
 import Link from "next/link";
-import { FiLogIn } from "react-icons/fi";
 
 const Header = () => {
   return (
@@ -16,14 +16,7 @@ const Header = () => {
           </li>
         </ul>
       </div>
-
-      <Link
-        href="/signin"
-        className={`flex items-center bg-white text-meBlue hover:bg-meBlue hover:text-white transition-all ease-in duration-100 rounded-lg py-1 px-3`}
-      >
-        <FiLogIn className={`text-2xl`} />
-        <span className={`mr-1`}>ورود</span>
-      </Link>
+      <HeaderControls />
     </header>
   );
 };

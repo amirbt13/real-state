@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { yekan } from "@/utils/font";
 import Layout from "@/layouts/Layout";
+import NextAuthProvider from "@/providers/NextAuthProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" className={yekan.className}>
       <body>
-        <Layout>{children}</Layout>
+        <NextAuthProvider>
+          <Layout>{children}</Layout>
+        </NextAuthProvider>
       </body>
     </html>
   );
