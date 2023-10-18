@@ -28,6 +28,7 @@
       "@/providers/*": ["src/providers/*"],
       "@/templates/*": ["src/components/templates/*"],
       "@/modules/*": ["src/components/modules/*"],
+      "@/elements/*": ["src/components/elements/*"],
       "@/layouts/*": ["src/components/layouts/*"]
     }
   },
