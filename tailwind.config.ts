@@ -33,6 +33,7 @@ const config: Config = {
       colors: {
         current: "currentColor",
         meBlue: "#304ffe",
+        meTrans: "#304ffe18",
       },
     },
   },
