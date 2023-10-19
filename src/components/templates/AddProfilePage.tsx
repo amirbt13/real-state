@@ -1,35 +1,22 @@
 "use client";
 import TextInput from "@/elements/TextInput";
-import {
-  useForm,
-  SubmitHandler,
-  useFieldArray,
-  UseFieldArrayProps,
-} from "react-hook-form";
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { p2e } from "@/utils/replaceNumbers";
 import RadioList from "@/modules/dashboard-add/RadioList";
 import TextList from "@/modules/dashboard-add/TextList";
-
-export type Inputs = {
-  title: string;
-  description: string;
-  location: string;
-  phone: string;
-  price: string;
-  realState: string;
-  construction: Date;
-  category: string;
-  rules: string[];
-  amenities: string[];
-};
+import { Profile } from "src/types/Profile";
+import CustomDatePicker from "@/modules/dashboard-add/CustomDatePicker";
+import { useState } from "react";
+import { Value } from "react-multi-date-picker";
 
 const AddProfilePage = () => {
   const {
     register,
     handleSubmit,
     control,
+    getValues,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm<Profile>({
     defaultValues: {
       title: "",
       description: "",
@@ -43,7 +30,7 @@ const AddProfilePage = () => {
       amenities: [],
     },
   });
-
+  const [submitedDate, setSubmitedDate] = useState<Value>();
   const {
     fields: ruleFields,
     append: appendRule,
@@ -61,8 +48,9 @@ const AddProfilePage = () => {
     control,
   });
 
-  const submit: SubmitHandler<Inputs> = (data) => {
+  const submit: SubmitHandler<Profile> = (data) => {
     // console.log(typeof data);
+    data.construction = new Date(data.construction);
     const p2eDataArr = Object.entries(data).map((item) => {
       if (typeof item[1] === "string" || typeof item[1] === "number") {
         return [item[0], p2e(item[1])];
@@ -150,6 +138,7 @@ const AddProfilePage = () => {
           remove={removeAmenity}
           fields={amenitiesFields}
         />
+        <CustomDatePicker control={control} />
         <input
           type="submit"
           value={"ثبت آگهی"}
