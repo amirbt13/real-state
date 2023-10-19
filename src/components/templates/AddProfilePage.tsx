@@ -30,7 +30,7 @@ const AddProfilePage = () => {
       amenities: [],
     },
   });
-  const [submitedDate, setSubmitedDate] = useState<Value>();
+
   const {
     fields: ruleFields,
     append: appendRule,
@@ -48,8 +48,7 @@ const AddProfilePage = () => {
     control,
   });
 
-  const submit: SubmitHandler<Profile> = (data) => {
-    // console.log(typeof data);
+  const prepareData = (data: Profile) => {
     data.construction = new Date(data.construction);
     const p2eDataArr = Object.entries(data).map((item) => {
       if (typeof item[1] === "string" || typeof item[1] === "number") {
@@ -58,8 +57,19 @@ const AddProfilePage = () => {
       return item;
     });
     const p2eData = Object.fromEntries(p2eDataArr);
-    console.log(p2eData);
+    return p2eData;
   };
+
+  const submit: SubmitHandler<Profile> = async (data) => {
+    const finalForm = prepareData(data);
+    const res = await fetch("/api/profile", {
+      method: "POST",
+      body: JSON.stringify(finalForm),
+    });
+    const resData = await res.json();
+    console.log(resData);
+  };
+
   return (
     <div className="flex flex-col mb-36">
       <h3 className=" text-2xl font-normal mb-20 w-full bg-meTrans text-meBlue rounded-lg py-3 px-4">
