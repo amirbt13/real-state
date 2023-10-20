@@ -42,7 +42,8 @@ const TextList: React.FC<Props> = ({
         ))}
       <button
         className=" bg-meBlue text-white text-base rounded-md transition-all ease-in duration-100 cursor-pointer py-1 px-2 flex mt-5 hover:scale-105"
-        onClick={() => append("")}
+        onClick={() => append("", { shouldFocus: true })}
+        type="button"
       >
         افزودن
         <MdOutlineLibraryAdd className=" mr-1 text-xl" />
