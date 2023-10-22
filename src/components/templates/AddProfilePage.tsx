@@ -6,18 +6,26 @@ import RadioList from "@/modules/dashboard-add/RadioList";
 import TextList from "@/modules/dashboard-add/TextList";
 import { Profile } from "src/types/Profile";
 import CustomDatePicker from "@/modules/dashboard-add/CustomDatePicker";
+import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
-import { Value } from "react-multi-date-picker";
+import Loader from "@/elements/Loader";
+import { useRouter } from "next/navigation";
 
-const AddProfilePage = () => {
+interface Props {
+  profile?: Profile;
+  id?: string;
+}
+
+const AddProfilePage: React.FC<Props> = ({ profile, id }) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     control,
-    getValues,
     formState: { errors },
   } = useForm<Profile>({
-    defaultValues: {
+    defaultValues: profile || {
       title: "",
       description: "",
       location: "",
@@ -61,19 +69,48 @@ const AddProfilePage = () => {
   };
 
   const submit: SubmitHandler<Profile> = async (data) => {
+    setLoading(true);
     const finalForm = prepareData(data);
-    const res = await fetch("/api/profile", {
-      method: "POST",
-      body: JSON.stringify(finalForm),
-    });
-    const resData = await res.json();
-    console.log(resData);
+    if (!profile) {
+      // adding a new profile
+      const res = await fetch("/api/profile", {
+        method: "POST",
+        body: JSON.stringify(finalForm),
+        headers: { "Content-Type": "application/json" },
+      });
+      const resData = await res.json();
+      setLoading(false);
+      if (res.status === 201) {
+        toast.success(resData.message);
+        router.refresh();
+      } else {
+        toast.error(resData.error);
+      }
+    } else {
+      // edit an existing profile
+      const res = await fetch(`/api/profile`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          ...finalForm,
+          _id: id,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const resData = await res.json();
+      setLoading(false);
+      if (res.status === 200) {
+        toast.success(resData.message);
+        router.refresh();
+      } else {
+        toast.error(resData.error);
+      }
+    }
   };
 
   return (
     <div className="flex flex-col mb-36">
       <h3 className=" text-2xl font-normal mb-20 w-full bg-meTrans text-meBlue rounded-lg py-3 px-4">
-        ثبت آگهی
+        {profile ? "ویرایش آگهی" : "ثبت آگهی"}
       </h3>
       <form onSubmit={handleSubmit(submit)}>
         <TextInput
@@ -111,11 +148,12 @@ const AddProfilePage = () => {
         <TextInput
           title="قیمت(تومان)"
           name="price"
-          type="text"
+          type="number"
           errors={errors}
           register={register}
           requaredMsg="قیمت را وارد کنید"
         />
+
         <TextInput
           title="بنگاه"
           name="realState"
@@ -149,12 +187,17 @@ const AddProfilePage = () => {
           fields={amenitiesFields}
         />
         <CustomDatePicker control={control} />
-        <input
-          type="submit"
-          value={"ثبت آگهی"}
-          className="bg-meBlue w-full text-white font-normal rounded-md transition-all ease-in duration-100 cursor-pointer p-3 hover:scale-105"
-        />
+        {loading ? (
+          <Loader color="#304ffe" />
+        ) : (
+          <input
+            type="submit"
+            value={profile ? "ویرایش آگهی" : "ثبت آگهی"}
+            className="bg-meBlue w-full text-white font-normal rounded-md transition-all ease-in duration-100 cursor-pointer p-3 hover:scale-105"
+          />
+        )}
       </form>
+      <Toaster />
     </div>
   );
 };
