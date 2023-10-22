@@ -1,4 +1,4 @@
-export type Profile = {
+export interface Profile {
   title: string;
   description: string;
   location: string;
@@ -9,4 +9,8 @@ export type Profile = {
   category: string;
   rules: string[];
   amenities: string[];
-};
+}
+
+export interface BProfile extends Profile {
+  _id: string;
+}

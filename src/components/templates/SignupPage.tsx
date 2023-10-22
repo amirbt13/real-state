@@ -4,7 +4,7 @@ import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ThreeDots } from "react-loader-spinner";
+import Loader from "@/elements/Loader";
 
 type Inputs = {
   email: string;
@@ -111,13 +111,7 @@ const SignupPage = () => {
           </span>
         )}
         {loading ? (
-          <ThreeDots
-            height={45}
-            color="#304ffe"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{ margin: "auto" }}
-            visible={true}
-          />
+          <Loader color="#304ffe" />
         ) : (
           <button
             type="submit"

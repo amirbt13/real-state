@@ -1,9 +1,12 @@
+import { priceFormatter } from "@/utils/priceFormatter";
+
 interface Props {
   title: string;
   name: string;
   type: string;
   register: any;
   errors: any;
+
   requaredMsg?: string | boolean;
   textarea?: boolean;
 }
@@ -14,12 +17,14 @@ const TextInput: React.FC<Props> = ({
   type,
   register,
   errors,
+
   requaredMsg = false,
   textarea = false,
 }) => {
   return (
     <div>
       <p className="text-[1.1rem] mb-[5px] ">{title}</p>
+
       {textarea ? (
         <>
           <textarea
