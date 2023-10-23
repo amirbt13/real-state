@@ -4,7 +4,7 @@ import React from "react";
 
 const EditProfile = async ({ params }: { params: { profileId: string } }) => {
   const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/profiles/${params.profileId}`,
+    `${process.env.NEXTAUTH_URL}/api/myprofiles/${params.profileId}`,
     {
       headers: { Cookie: cookies().toString() },
       cache: "no-store",
