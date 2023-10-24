@@ -8,14 +8,26 @@ export async function GET(req: NextRequest) {
     const category: string | null = search.get("category");
 
     await connectDB();
+
     if (!category) {
       const profiles = await Profile.find().select("-userId");
       return NextResponse.json({ profiles }, { status: 200 });
-    } else {
-      const profiles = await Profile.find({ category }).select("-userId");
-
-      return NextResponse.json({ profiles }, { status: 200 });
     }
+
+    if (
+      category !== "villa" &&
+      category !== "apartment" &&
+      category !== "store" &&
+      category !== "office"
+    ) {
+      return NextResponse.json(
+        { error: "دسته بندی مورد نظر وجود ندارد" },
+        { status: 404 }
+      );
+    }
+    const profiles = await Profile.find({ category }).select("-userId");
+
+    return NextResponse.json({ profiles }, { status: 200 });
   } catch (err) {
     console.log(err);
     return NextResponse.json(

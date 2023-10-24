@@ -9,7 +9,7 @@ interface Props {
 const CategoryCard: React.FC<Props> = ({ title, name }) => {
   return (
     <div className=" shadow-lg shadow-[#304ffe4a] rounded-2xl overflow-hidden p-3 transition-all ease-in duration-100 my-2 hover:-rotate-6">
-      <Link href={"/"}>
+      <Link href={`/buy-residentials?category=${name}`}>
         <Image
           className=" rounded-xl"
           src={`/images/${name}.png`}

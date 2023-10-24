@@ -1,5 +1,6 @@
 import BuyResidentialsPage from "@/templates/BuyResidentialsPage";
 import { cookies } from "next/headers";
+import { BProfile } from "src/types/Profile";
 
 const BuyResidentials = async ({
   searchParams,
@@ -18,9 +19,9 @@ const BuyResidentials = async ({
       cache: "no-store",
     }
   );
-  const data = await res.json();
-
-  return <BuyResidentialsPage profiles={data.profiles} />;
+  const data: { profiles: BProfile[] } | { error: string } = await res.json();
+  //   console.log(data);
+  return <BuyResidentialsPage data={data} />;
 };
 
 export default BuyResidentials;
