@@ -3,16 +3,15 @@ import { RiHome3Line } from "react-icons/ri";
 import { BiLeftArrowAlt, BiStore } from "react-icons/bi";
 import { GiOfficeChair } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { Profile } from "src/types/Profile";
+import { BProfile } from "src/types/Profile";
 import { sp } from "@/utils/replaceNumbers";
 import Link from "next/link";
 
 interface Props {
-  profile: Profile;
+  profile: BProfile;
 }
-
 const Card: React.FC<Props> = ({
-  profile: { title, category, price, location },
+  profile: { title, category, price, location, _id },
 }) => {
   let icon = null;
   switch (category) {
@@ -51,7 +50,7 @@ const Card: React.FC<Props> = ({
       </span>
       <Link
         className="flex items-center justify-between mt-5 text-[0.95rem] font-normal text-meBlue"
-        href={"/"}
+        href={`/buy-residentials/${_id}`}
       >
         مشاهده آگهی
         <BiLeftArrowAlt className="text-[1.5rem]" />

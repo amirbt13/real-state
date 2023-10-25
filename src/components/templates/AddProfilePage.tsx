@@ -73,7 +73,7 @@ const AddProfilePage: React.FC<Props> = ({ profile, id }) => {
     const finalForm = prepareData(data);
     if (!profile) {
       // adding a new profile
-      const res = await fetch("/api/profile", {
+      const res = await fetch("/api/myprofile", {
         method: "POST",
         body: JSON.stringify(finalForm),
         headers: { "Content-Type": "application/json" },
@@ -88,7 +88,7 @@ const AddProfilePage: React.FC<Props> = ({ profile, id }) => {
       }
     } else {
       // edit an existing profile
-      const res = await fetch(`/api/profile`, {
+      const res = await fetch(`/api/myprofile`, {
         method: "PATCH",
         body: JSON.stringify({
           ...finalForm,

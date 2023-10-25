@@ -15,7 +15,7 @@ const DashboardCard: React.FC<Props> = ({ profile }) => {
   };
   const deleteHandler = async () => {
     console.log("click");
-    const res = await fetch(`/api/profile/delete/${profile._id}`, {
+    const res = await fetch(`/api/myprofile/delete/${profile._id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
