@@ -8,8 +8,8 @@ const BuyResidentials = async ({
   searchParams: { category: string };
 }) => {
   const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/profiles${
-      searchParams.category ? "?category=" + searchParams.category : ""
+    `${process.env.NEXTAUTH_URL}/api/profiles?isPublished=true${
+      searchParams.category ? "&category=" + searchParams.category : ""
     }`,
     {
       headers: {

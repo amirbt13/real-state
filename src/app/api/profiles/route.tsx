@@ -5,12 +5,16 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const search = req.nextUrl.searchParams;
+    console.log(search);
     const category: string | null = search.get("category");
+    const isPublished: string | null = search.get("isPublished");
 
     await connectDB();
 
     if (!category) {
-      const profiles = await Profile.find().select("-userId");
+      const profiles = await Profile.find({
+        isPublished: !!isPublished,
+      }).select("-userId");
       return NextResponse.json({ profiles }, { status: 200 });
     }
 
