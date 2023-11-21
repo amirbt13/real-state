@@ -1,4 +1,5 @@
 import { Schema, model, models } from "mongoose";
+import { Role } from "src/types/enums";
 
 const userSchema = new Schema({
   email: {
@@ -8,6 +9,10 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
+  },
+  role: {
+    type: String,
+    default: Role.USER,
   },
   createdAt: {
     type: Date,
